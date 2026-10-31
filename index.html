@@ -169,31 +169,63 @@ section.block { position: relative; padding-block: 120px; }
 .front li { display: flex; align-items: baseline; gap: 12px; padding: 11px 0; border-top: 1px solid var(--line); font-size: 15.5px; }
 .front li::before { content: "→"; color: var(--volt); font-family: var(--f-mono); }
 
-/* trabalhos */
-.works { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; perspective: 1200px; }
-.work { min-width: 0; }
-.phone {
-  position: relative; width: 100%; max-width: 300px; aspect-ratio: 9 / 18.5; margin: 0 auto 26px;
-  border-radius: 42px; padding: 10px; background: linear-gradient(145deg, #2a3142, #0c0f17 45%, #1d2331);
-  box-shadow: 0 30px 80px -20px rgba(0,0,0,.8), 0 0 0 1px #2c3445, inset 0 0 0 1px rgba(255,255,255,.05);
-  transform-style: preserve-3d; transition: transform .25s ease-out, box-shadow .3s;
+/* projetos */
+.projs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.proj { grid-column: span 1; min-width: 0; display: flex; flex-direction: column; gap: 18px; text-decoration: none; color: inherit; }
+.proj.wide { grid-column: 1 / -1; }
+.frame {
+  position: relative; border-radius: 16px; overflow: hidden; background: var(--panel);
+  border: 1px solid var(--line); box-shadow: 0 30px 70px -30px rgba(0,0,0,.9);
+  transition: transform .45s cubic-bezier(.2,.7,.2,1), border-color .3s, box-shadow .45s;
 }
-.phone:hover { box-shadow: 0 40px 90px -20px rgba(61,123,255,.35), 0 0 0 1px var(--volt); }
-.screen { position: relative; width: 100%; height: 100%; border-radius: 33px; overflow: hidden; background: #000; }
-.screen video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.notch { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); width: 34%; height: 22px; border-radius: 99px; background: #000; z-index: 3; }
-.ph { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 22px; background: var(--g); }
-.ph::before { content: ""; position: absolute; inset: -40%; background: conic-gradient(from 0deg, transparent, rgba(255,255,255,.12), transparent 30%); animation: spin 7s linear infinite; }
-@keyframes spin { to { transform: rotate(1turn); } }
-.ph .mark { position: relative; font: 900 64px/0.9 var(--f-display); font-stretch: 125%; color: rgba(255,255,255,.92); letter-spacing: -.02em; }
-.ph .tag { position: relative; margin-top: 12px; font: 500 11px var(--f-mono); letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.8); }
-.ph .play { position: absolute; top: 50%; left: 50%; width: 64px; height: 64px; margin: -32px 0 0 -32px; border-radius: 50%; background: rgba(255,255,255,.16); backdrop-filter: blur(6px); display: grid; place-items: center; }
-.ph .play svg { width: 22px; height: 22px; margin-left: 4px; fill: #fff; }
-.work h3 { margin: 0; font: 800 22px/1.15 var(--f-display); font-stretch: 112%; }
-.work .where { font: 500 12px var(--f-mono); color: var(--volt-hi); margin: 4px 0 10px; display: block; }
-.work p { margin: 0 0 14px; color: var(--dim); font-size: 15px; }
-.work .ig { font: 500 13px var(--f-mono); text-decoration: none; color: var(--text); border-bottom: 1px solid var(--volt); padding-bottom: 2px; }
-.work .ig:hover { color: var(--volt-hi); }
+.bar { display: flex; align-items: center; gap: 7px; height: 34px; padding: 0 14px; background: #0f131d; border-bottom: 1px solid var(--line); }
+.bar i { width: 9px; height: 9px; border-radius: 50%; background: #2a3142; }
+.bar span { margin-left: 10px; font: 500 11px var(--f-mono); color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.frame img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: left top; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.frame .open {
+  position: absolute; right: 16px; bottom: 16px; display: inline-flex; align-items: center; gap: 8px;
+  font: 600 13px var(--f-body); padding: 10px 16px; border-radius: 999px; background: var(--volt); color: #fff;
+  opacity: 0; transform: translateY(8px); transition: opacity .3s, transform .3s;
+}
+.proj:hover .frame, .proj:focus-visible .frame { transform: translateY(-6px); border-color: var(--volt); box-shadow: 0 40px 90px -30px rgba(61,123,255,.45); }
+.proj:hover .frame img { transform: scale(1.03); }
+.proj:hover .open, .proj:focus-visible .open { opacity: 1; transform: none; }
+.proj:focus-visible { outline: none; }
+.proj:focus-visible .frame { outline: 2px solid var(--volt); outline-offset: 4px; }
+.pinfo { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px 24px; flex-wrap: wrap; }
+.pinfo h3 { margin: 0; font: 800 clamp(22px, 2.6vw, 30px)/1.1 var(--f-display); font-stretch: 112%; }
+.pinfo .tag { font: 500 11px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--volt-hi); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; white-space: nowrap; }
+.pinfo p { flex-basis: 100%; margin: 0; color: var(--dim); font-size: 15.5px; max-width: 70ch; }
+@media (hover: none) { .frame .open { opacity: 1; transform: none; } }
+@media (max-width: 900px) { .projs { grid-template-columns: minmax(0, 1fr); } .proj.wide { grid-column: auto; } }
+
+/* trabalhos */
+.works { border-top: 1px solid var(--line); }
+.work {
+  --g: var(--volt);
+  position: relative; display: grid; grid-template-columns: 60px minmax(0, 1.1fr) minmax(0, 1.4fr) 230px; gap: 12px 32px; align-items: center;
+  padding: 34px 8px; border-bottom: 1px solid var(--line); text-decoration: none; color: inherit; overflow: hidden; isolation: isolate;
+}
+.work::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .4s;
+  background: radial-gradient(600px 160px at 20% 50%, color-mix(in srgb, var(--g) 22%, transparent), transparent 70%);
+}
+.work:hover::before, .work:focus-visible::before { opacity: 1; }
+.work:focus-visible { outline: 1px solid var(--volt); outline-offset: -1px; }
+.wi { font: 500 13px var(--f-mono); color: var(--dim); }
+.work h3 { margin: 0; font: 800 clamp(24px, 3vw, 38px)/1.05 var(--f-display); font-stretch: 118%; transition: transform .4s cubic-bezier(.2,.7,.2,1), color .3s; }
+.work:hover h3 { transform: translateX(10px); }
+.work .where { font: 500 12px var(--f-mono); color: var(--volt-hi); display: block; margin-top: 8px; }
+.work p { margin: 0; color: var(--dim); font-size: 15.5px; }
+.wt { position: absolute; top: 14px; right: 8px; font: 500 10.5px var(--f-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--g); }
+.ig { justify-self: end; font: 500 13px var(--f-mono); white-space: nowrap; border-bottom: 1px solid var(--volt); padding-bottom: 2px; transition: color .3s; }
+.work:hover .ig { color: var(--volt-hi); }
+@media (max-width: 900px) {
+  .work { grid-template-columns: minmax(0, 1fr); padding: 30px 4px; gap: 10px; }
+  .wi { display: none; }
+  .wt { position: static; order: -1; }
+  .ig { justify-self: start; }
+}
 
 /* contato */
 #contato { text-align: center; padding-bottom: 80px; }
@@ -213,8 +245,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
 @media (max-width: 900px) {
   nav ul { display: none; }
   .about { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-  .fronts, .works { grid-template-columns: minmax(0, 1fr); }
-  .works { gap: 56px; }
+  .fronts { grid-template-columns: minmax(0, 1fr); }
   .path { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .path-line { left: 8px; right: auto; top: 0; bottom: 0; width: 2px; height: auto; }
   .path-line i { transform-origin: top; transform: scaleY(0); }
@@ -227,7 +258,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
   .hero-row { justify-content: center; text-align: center; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .mq-track, .ph::before { animation: none; }
+  .mq-track { animation: none; }
   html { scroll-behavior: auto; }
 }
 </style>
@@ -247,6 +278,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
     <li><a href="#sobre">Sobre</a></li>
     <li><a href="#trajetoria">Trajetória</a></li>
     <li><a href="#frentes">Serviços</a></li>
+    <li><a href="#projetos">Projetos</a></li>
     <li><a href="#trabalhos">Trabalhos</a></li>
     <li><a href="#contato">Contato</a></li>
   </ul>
@@ -360,50 +392,78 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
     </div>
   </section>
 
+  <section class="block" id="projetos">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div><span class="eyebrow">Sites e painéis</span><h2 class="big chrome">Projetos</h2></div>
+        <p class="mono" style="color:var(--dim);margin:0">Clique num projeto para abrir ↗</p>
+      </div>
+      <div class="projs">
+        <a class="proj wide rv" href="projetos/presente-facil.html" target="_blank" rel="noopener">
+          <div class="frame">
+            <div class="bar"><i></i><i></i><i></i><span>Presente Fácil · Painel do organizador</span></div>
+            <img src="assets/proj-presente-facil.webp" alt="Painel do Presente Fácil com saldo, presentes recebidos e atividade recente" loading="lazy" width="1200" height="750">
+            <span class="open">Abrir painel ↗</span>
+          </div>
+          <div class="pinfo">
+            <h3>Presente Fácil</h3><span class="tag">Dashboard · Redesign</span>
+            <p>Painel de quem cria uma lista de presentes com Pix: valor disponível, meta da lista, presentes mais escolhidos e atividade dos convidados em tempo real.</p>
+          </div>
+        </a>
+        <a class="proj rv" href="projetos/meumenu.html" target="_blank" rel="noopener">
+          <div class="frame">
+            <div class="bar"><i></i><i></i><i></i><span>MeuMenu · Landing page</span></div>
+            <img src="assets/proj-meumenu.webp" alt="Landing page do MeuMenu com cardápio digital no celular" loading="lazy" width="1200" height="750">
+            <span class="open">Abrir página ↗</span>
+          </div>
+          <div class="pinfo">
+            <h3>MeuMenu</h3><span class="tag">Landing page</span>
+            <p>Página de vendas do sistema de delivery próprio, com cardápio de demonstração no celular, planos e contato direto pelo WhatsApp.</p>
+          </div>
+        </a>
+        <a class="proj rv" href="projetos/celebre.html" target="_blank" rel="noopener">
+          <div class="frame">
+            <div class="bar"><i></i><i></i><i></i><span>Celebre · Estudo de caso</span></div>
+            <img src="assets/proj-celebre.webp" alt="Estudo de caso do Projeto Celebre, sistema para cerimonialistas" loading="lazy" width="1200" height="750">
+            <span class="open">Ver estudo de caso ↗</span>
+          </div>
+          <div class="pinfo">
+            <h3>Celebre</h3><span class="tag">SaaS · Estudo de caso</span>
+            <p>Redesign de um sistema para cerimonialistas: site, painel, telas do cliente e do convidado, e o modo dia do evento.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <section class="block" id="trabalhos">
     <div class="wrap">
       <div class="sec-head rv">
-        <div><span class="eyebrow">Clientes</span><h2 class="big chrome">Trabalhos</h2></div>
-        <p class="mono" style="color:var(--dim);margin:0">Passe o mouse nos celulares</p>
+        <div><span class="eyebrow">Vídeo e redes</span><h2 class="big chrome">Trabalhos</h2></div>
+        <p class="mono" style="color:var(--dim);margin:0">Vídeo e conteúdo para empresas</p>
       </div>
       <div class="works">
-        <article class="work rv">
-          <div class="phone"><div class="screen"><div class="notch"></div>
-            <!-- Para mostrar um Reel: coloque o arquivo em assets/ e preencha data-video, ex.: data-video="assets/montecarmo.mp4" -->
-            <div class="ph" data-video="" style="--g: linear-gradient(160deg,#0a3d91,#071a3d 55%,#e8b10e 140%)">
-              <div class="play"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></div>
-              <div class="mark">MC</div><div class="tag">Reels · Postos</div>
-            </div>
-          </div></div>
-          <h3>Monte Carmo Combustíveis</h3>
-          <span class="where">Postos de combustível · Betim, MG</span>
+        <a class="work rv" href="https://www.instagram.com/montecarmocombustiveis/" target="_blank" rel="noopener" style="--g:#e8b10e">
+          <span class="wi">01</span>
+          <div class="wm"><h3>Monte Carmo Combustíveis</h3><span class="where">Postos de combustível · Betim, MG</span></div>
           <p>Edição de Reels para o Instagram da rede, com legendas, cortes dinâmicos e chamadas para as unidades.</p>
-          <a class="ig" href="https://www.instagram.com/montecarmocombustiveis/" target="_blank" rel="noopener">@montecarmocombustiveis ↗</a>
-        </article>
-        <article class="work rv">
-          <div class="phone"><div class="screen"><div class="notch"></div>
-            <div class="ph" data-video="" style="--g: linear-gradient(160deg,#ff5a1f,#9a1d3a 55%,#1a0b24)">
-              <div class="play"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></div>
-              <div class="mark">MM</div><div class="tag">Instagram · YouTube</div>
-            </div>
-          </div></div>
-          <h3>MeuMenu</h3>
-          <span class="where">App de cardápio digital e delivery</span>
+          <span class="wt">Reels</span>
+          <span class="ig">@montecarmocombustiveis ↗</span>
+        </a>
+        <a class="work rv" href="https://www.instagram.com/meumenuapp/" target="_blank" rel="noopener" style="--g:#ff5a1f">
+          <span class="wi">02</span>
+          <div class="wm"><h3>MeuMenu</h3><span class="where">App de cardápio digital e delivery</span></div>
           <p>Reformulação do Instagram, estratégia de marketing e vídeos curtos para redes sociais e YouTube.</p>
-          <a class="ig" href="https://www.instagram.com/meumenuapp/" target="_blank" rel="noopener">@meumenuapp ↗</a>
-        </article>
-        <article class="work rv">
-          <div class="phone"><div class="screen"><div class="notch"></div>
-            <div class="ph" data-video="" style="--g: linear-gradient(160deg,#10b5a6,#0b4f6c 55%,#061826)">
-              <div class="play"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></div>
-              <div class="mark">FP</div><div class="tag">Reels · Saúde</div>
-            </div>
-          </div></div>
-          <h3>Fisio Pro</h3>
-          <span class="where">Clínica de fisioterapia · Magé, RJ</span>
+          <span class="wt">Instagram · YouTube</span>
+          <span class="ig">@meumenuapp ↗</span>
+        </a>
+        <a class="work rv" href="https://www.instagram.com/fisiopromage/" target="_blank" rel="noopener" style="--g:#10b5a6">
+          <span class="wi">03</span>
+          <div class="wm"><h3>Fisio Pro</h3><span class="where">Clínica de fisioterapia · Magé, RJ</span></div>
           <p>Edição de Reels para o Instagram da clínica, transformando atendimentos e dicas em conteúdo curto.</p>
-          <a class="ig" href="https://www.instagram.com/fisiopromage/" target="_blank" rel="noopener">@fisiopromage ↗</a>
-        </article>
+          <span class="wt">Reels</span>
+          <span class="ig">@fisiopromage ↗</span>
+        </a>
       </div>
     </div>
   </section>
@@ -607,7 +667,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
       gsap.to(o, { v: to, duration: 1.4, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 85%' }, onUpdate: function () { el.textContent = Math.round(o.v); } });
     });
     // link ativo no menu
-    ['top', 'sobre', 'trajetoria', 'frentes', 'trabalhos', 'contato'].forEach(function (id) {
+    ['top', 'sobre', 'trajetoria', 'frentes', 'projetos', 'trabalhos', 'contato'].forEach(function (id) {
       var sec = id === 'top' ? document.getElementById('hero') : document.getElementById(id);
       ScrollTrigger.create({ trigger: sec, start: 'top 50%', end: 'bottom 50%', onToggle: function (s) {
         if (!s.isActive) return;
@@ -621,20 +681,6 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
   /* ================= cards e celulares ================= */
   document.querySelectorAll('.front').forEach(function (c) {
     c.addEventListener('pointermove', function (e) { var r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px'); });
-  });
-  document.querySelectorAll('.phone').forEach(function (ph) {
-    var holder = ph.querySelector('.ph'), src = holder && holder.dataset.video, vid = null;
-    if (src) {
-      vid = document.createElement('video'); vid.src = src; vid.muted = true; vid.loop = true; vid.playsInline = true; vid.preload = 'metadata';
-      ph.querySelector('.screen').appendChild(vid); holder.style.opacity = '0';
-    }
-    ph.addEventListener('pointermove', function (e) {
-      if (reduce) return;
-      var r = ph.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-      ph.style.transform = 'rotateY(' + (x * 14) + 'deg) rotateX(' + (-y * 14) + 'deg) translateZ(10px)';
-    });
-    ph.addEventListener('pointerenter', function () { if (vid) vid.play().catch(function () {}); });
-    ph.addEventListener('pointerleave', function () { ph.style.transform = ''; if (vid) vid.pause(); });
   });
   var cm = document.getElementById('copyMail');
   cm.addEventListener('click', function () {
